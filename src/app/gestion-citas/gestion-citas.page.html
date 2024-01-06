@@ -1,0 +1,80 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>GestionCitas</ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="navegateHome()">
+        <ion-icon src="/assets/icon/arrow-back-outline.svg"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">GestionCitas</ion-title>
+      <ion-buttons slot="start">
+        <ion-button (click)="navegateHome()">
+          <ion-icon src="/assets/icon/arrow-back-outline.svg"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content color="light">
+    <ion-list>
+      <ion-item>
+        <form [formGroup]="miFormulario" (ngSubmit)="agregar()">
+          <ion-card color="light">
+            <ion-card-header>
+              <ion-card-title>Nueva cita</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <ion-item
+                [class.invalid]="miFormulario.get('strCita')?.invalid && miFormulario.get('strCita')?.touched"
+              >
+                <ion-label position="floating">Cita</ion-label>
+                <ion-input type="text" formControlName="strCita"></ion-input>
+              </ion-item>
+              <ion-text
+                *ngIf="miFormulario.get('strCita')?.invalid && miFormulario.get('strCita')?.touched"
+                color="danger"
+              >
+                La cita debe tener al menos 5 caracteres.
+              </ion-text>
+
+              <ion-item
+                [class.invalid]="miFormulario.get('strAutor')?.invalid && miFormulario.get('strAutor')?.touched"
+              >
+                <ion-label position="floating">Autor</ion-label>
+                <ion-input type="text" formControlName="strAutor"></ion-input>
+              </ion-item>
+              <ion-text
+                *ngIf="miFormulario.get('strAutor')?.invalid && miFormulario.get('strAutor')?.touched"
+                color="danger"
+              >
+                El autor debe tener al menos 2 caracteres.
+              </ion-text>
+              <br />
+              <ion-button type="submit" [disabled]="!miFormulario.valid"
+                >+ Agregar</ion-button
+              >
+            </ion-card-content>
+          </ion-card>
+        </form>
+      </ion-item>
+
+      <ion-item *ngFor="let c of citas">
+        <ion-icon
+          src="/assets/icon/trash-outline.svg"
+          slot="end"
+          (click)="borrarCita(c.id)"
+        ></ion-icon>
+        <ion-label>
+          <h3>{{c.cita}}</h3>
+          <ion-note color="medium">{{c.autor}}</ion-note>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-content>
