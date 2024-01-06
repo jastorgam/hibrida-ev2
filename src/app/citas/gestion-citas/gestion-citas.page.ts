@@ -13,7 +13,7 @@ import {
   IonList,
   IonNote,
 } from '@ionic/angular/standalone';
-import { CitasService } from '../services/citas.service';
+import { CitasService } from '../../services/citas.service';
 import {
   FormBuilder,
   FormGroup,
@@ -21,7 +21,9 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Cita } from '../models/citas';
+import { Cita } from '../../models/citas';
+import { AddCitaComponent } from '../add-cita/add-cita.component';
+import { ListCitasComponent } from '../list-citas/list-citas.component';
 
 @Component({
   selector: 'app-gestion-citas',
@@ -43,26 +45,25 @@ import { Cita } from '../models/citas';
     IonCardTitle,
     IonCardHeader,
     ReactiveFormsModule,
+    AddCitaComponent,
+    ListCitasComponent,
   ],
 })
 export class GestionCitasPage implements OnInit, OnDestroy {
-  miFormulario: FormGroup;
   citas!: Cita[];
 
-  constructor(
-    public citaService: CitasService,
-    private formBuilder: FormBuilder
-  ) {
-    this.miFormulario = this.formBuilder.group({
-      strCita: ['', [Validators.required, Validators.minLength(5)]],
-      strAutor: ['', [Validators.required, Validators.minLength(2)]],
-    });
-  }
+  constructor(public citaService: CitasService) {}
 
   async ngOnInit() {
     console.log('GestionCitas init');
     await this.citaService.iniciarPlugin();
     await this.actualizar();
+  }
+
+  async createCita(cita: Cita) {
+    console.log('crearCita', cita);
+    await this.citaService.addCita(cita);
+    this.actualizar();
   }
 
   private async actualizar() {
@@ -73,22 +74,10 @@ export class GestionCitasPage implements OnInit, OnDestroy {
     this.citaService.cerrarConexion();
   }
 
-  async borrarCita(idx?: number) {
-    await this.citaService.removeCita(idx);
+  async deleteCita(cita: Cita) {
+    console.log('deleteCita', cita);
+    await this.citaService.removeCita(cita);
     await this.actualizar();
-  }
-
-  async agregar() {
-    if (this.miFormulario.valid) {
-      await this.citaService.addCita({
-        autor: this.miFormulario.get('strAutor')?.value,
-        cita: this.miFormulario.get('strCita')?.value,
-      });
-      await this.actualizar();
-      this.miFormulario.reset();
-    } else {
-      this.miFormulario.markAllAsTouched();
-    }
   }
 
   navegateHome() {

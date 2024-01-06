@@ -1,0 +1,33 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>GestionCitas</ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="navegateHome()">
+        <ion-icon src="/assets/icon/arrow-back-outline.svg"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">GestionCitas</ion-title>
+      <ion-buttons slot="start">
+        <ion-button (click)="navegateHome()">
+          <ion-icon src="/assets/icon/arrow-back-outline.svg"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content color="light">
+    <ion-list>
+      <app-add-cita (createCita)="createCita($event)"></app-add-cita>
+      <app-list-citas
+        [citas]="citas"
+        (deleteCita)="deleteCita($event)"
+      ></app-list-citas>
+    </ion-list>
+  </ion-content>
+</ion-content>

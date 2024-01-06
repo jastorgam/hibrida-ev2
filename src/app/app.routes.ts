@@ -16,6 +16,6 @@ export const routes: Routes = [
   },
   {
     path: 'gestion-citas',
-    loadComponent: () => import('./gestion-citas/gestion-citas.page').then( m => m.GestionCitasPage)
+    loadComponent: () => import('./citas/gestion-citas/gestion-citas.page').then( m => m.GestionCitasPage)
   },
 ];

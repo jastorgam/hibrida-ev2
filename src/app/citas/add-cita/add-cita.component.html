@@ -1,0 +1,52 @@
+<ion-item>
+  <form [formGroup]="miFormulario" (ngSubmit)="agregar()">
+    <ion-card color="light">
+      <ion-card-header>
+        <ion-card-title>Nueva cita</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item
+          [class.invalid]="
+            miFormulario.get('strCita')?.invalid &&
+            miFormulario.get('strCita')?.touched
+          "
+        >
+          <ion-label position="floating">Cita</ion-label>
+          <ion-input type="text" formControlName="strCita"></ion-input>
+        </ion-item>
+        <ion-text
+          *ngIf="
+            miFormulario.get('strCita')?.invalid &&
+            miFormulario.get('strCita')?.touched
+          "
+          color="danger"
+        >
+          La cita debe tener al menos 5 caracteres.
+        </ion-text>
+
+        <ion-item
+          [class.invalid]="
+            miFormulario.get('strAutor')?.invalid &&
+            miFormulario.get('strAutor')?.touched
+          "
+        >
+          <ion-label position="floating">Autor</ion-label>
+          <ion-input type="text" formControlName="strAutor"></ion-input>
+        </ion-item>
+        <ion-text
+          *ngIf="
+            miFormulario.get('strAutor')?.invalid &&
+            miFormulario.get('strAutor')?.touched
+          "
+          color="danger"
+        >
+          El autor debe tener al menos 2 caracteres.
+        </ion-text>
+        <br />
+        <ion-button type="submit" [disabled]="!miFormulario.valid"
+          >+ Agregar</ion-button
+        >
+      </ion-card-content>
+    </ion-card>
+  </form>
+</ion-item>

@@ -90,10 +90,10 @@ export class CitasService {
     return Promise.resolve(citass);
   }
 
-  async removeCita(id?: number) {
+  async removeCita(cita: Cita) {
     const sql = `DELETE FROM CITAS WHERE ID = ?`;
     console.log(sql);
-    await this.db.run(sql, [id]);
+    await this.db.run(sql, [cita.id]);
   }
 
   async addCita(cita: Cita) {
